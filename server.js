@@ -4,7 +4,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import dotenv from 'dotenv'
 
-import webpackDevConfig from './config/webpack.config.js'
+import webpackDevConfig from './config/webpack.config'
 
 dotenv.load()
 
@@ -13,6 +13,8 @@ const port = process.env.PORT
 
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(webpackDevConfig)
+  compiler.apply(new webpack.ProgressPlugin())
+
   server.use(
     webpackDevMiddleware(compiler, {
       publicPath: webpackDevConfig.output.publicPath,
